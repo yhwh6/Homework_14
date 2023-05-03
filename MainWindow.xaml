@@ -1,0 +1,85 @@
+﻿<Page x:Class="Homework_12.MainWindow"
+        ShowsNavigationUI="False"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Homework_12"
+        mc:Ignorable="d"
+        WindowTitle="Bank" MinHeight="450" MinWidth="700" FontFamily="Roboto" FontSize="15">
+    <Page.Resources>
+        <Style x:Key="MainStyle">
+            <Setter Property="Control.FontFamily" Value="Roboto" />
+            <Setter Property="Control.FontSize" Value="15" />
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Menu Style="{StaticResource MainStyle}" Grid.ColumnSpan="2" Padding="8">
+            <MenuItem Header="Client">
+                <MenuItem Click="MenuAddClient" Header="Add"></MenuItem>
+                <MenuItem Click="MenuDeleteClient" Header="Delete"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Account">
+                <MenuItem Click="MenuAddAccount" Header="Add account"></MenuItem>
+                <MenuItem Click="MenuDeleteAccount" Header="Delete account"></MenuItem>
+                <MenuItem Click="MenuTopUpBalance" Header="Top up account"></MenuItem>
+            </MenuItem>
+            <MenuItem Click="MenuTransfer" Header="Transfer"></MenuItem>
+        </Menu>
+        
+        <TabControl Grid.Row="1">
+            <TabItem Header="Clients">
+                <DataGrid 
+                    x:Name="dgClients" 
+                    AutoGenerateColumns="False"
+                    CanUserAddRows="False"
+                    HeadersVisibility="Column"
+                    SelectionMode="Single" 
+                    CellEditEnding="dgClients_CellEditEnding" 
+                    SelectionChanged="dgClients_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="*" Header="Name" Binding="{Binding FullName}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="*" IsReadOnly="True" Header="TaxID" Binding="{Binding TaxId}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="*" Header="Phone Number" Binding="{Binding PhoneNumber}"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                </DataGrid>
+            </TabItem>
+        </TabControl>
+
+        <TabControl Grid.Row="1" Grid.Column="1">
+            <TabItem Header="Accounts">
+                <DataGrid 
+                    IsReadOnly="True"
+                    x:Name="dgAccounts" 
+                    AutoGenerateColumns="False"
+                    CanUserAddRows="False"
+                    HeadersVisibility="Column"
+                    SelectionMode="Single">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="*" Header="Account number" Binding="{Binding Number}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="*" Header="Balance" Binding="{Binding Balance}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="*" Header="Account type" Binding="{Binding AccountType}"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                </DataGrid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>
