@@ -1,4 +1,4 @@
-﻿namespace Homework_12.Model
+﻿namespace Homework_13.Model
 {
     public class Balance<T>
     {

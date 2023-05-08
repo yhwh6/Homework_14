@@ -1,10 +1,10 @@
-﻿using Homework_12.Model;
+﻿using Homework_13.Model;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 
 
-namespace Homework_12
+namespace Homework_13
 {
     /// <summary>
     /// Interaction logic for pAddAccount.xaml
@@ -40,6 +40,9 @@ namespace Homework_12
                     account = new Deposit(TextBoxNumber.Text, 0);
                 }
                 MainWindow.clients.AddAccount(MainWindow.CurrentClientTaxId, account);
+
+                MessageBox.Show($"Account has been created for client {MainWindow.CurrentClientTaxId}.");
+                HistoryLog.SaveLogFile($"Account has been created for client {MainWindow.CurrentClientTaxId}.");
             }
             else
             {

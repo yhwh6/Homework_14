@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace Homework_12.Model
+namespace Homework_13.Model
 {
     /// <summary>
     /// Client deserealization class

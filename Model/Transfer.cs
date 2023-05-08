@@ -1,7 +1,7 @@
-﻿using Homework_12.Interface;
+﻿using Homework_13.Interface;
 
 
-namespace Homework_12.Model
+namespace Homework_13.Model
 {
     /// <summary>
     ///Transfer funds class

@@ -5,13 +5,23 @@ using System.Linq;
 using System.Windows;
 using System.IO;
 
-namespace Homework_12.Model
+namespace Homework_13.Model
 {
     /// <summary>
     /// List of clients
     /// </summary>
     public class ClientList : ObservableCollection<Client>
     {
+        /// <summary>
+        /// Delegat
+        /// </summary>
+        /// <param name="message"></param>
+        public delegate void AccountHandler(string message);
+        /// <summary>
+        /// Event log
+        /// </summary>
+        public event AccountHandler? Notify;
+
         /// <summary>
         /// Reading file
         /// </summary>
@@ -99,6 +109,29 @@ namespace Homework_12.Model
             {
                 this.First(x => x.TaxId == TaxId).AddAccount<T>(account);
             }
+        }
+
+        /// <summary>
+        /// Topping up funds message box
+        /// </summary>
+        public void TransferFunds(decimal sum)
+        {
+            if (FindClient(MainWindow.CurrentClientTaxId))
+            {
+                Client client = this.First(x => x.TaxId == MainWindow.CurrentClientTaxId);
+                Account account = (Account)client.Accounts.First(x => x.Number == MainWindow.CurrentAccountNumber);
+                account.TransferFunds(sum);
+                MessageBox.Show($"You have topped up account: {MainWindow.CurrentAccountNumber} with {sum} USD");
+            }
+        }
+
+        /// <summary>
+        /// Transgering funds message box
+        /// </summary>
+        public void Transfer(Account acc_out, Account acc_in, decimal sum)
+        {
+            MainWindow.transfer.Post(acc_out, acc_in, sum);
+            MessageBox.Show($"Transfer from: {acc_out.Number} to: {acc_in.Number} in the amount of {sum} USD");
         }
 
         /// <summary>

@@ -1,7 +1,7 @@
-﻿using Homework_12.Model;
+﻿using Homework_13.Model;
 
 
-namespace Homework_12
+namespace Homework_13
 {
     public class SideAccount : Account
     {

@@ -1,11 +1,11 @@
-﻿using Homework_12.Model;
+﻿using Homework_13.Model;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
 
-namespace Homework_12.View
+namespace Homework_13.View
 {
     /// <summary>
     /// Interaction logic for pTransfer.xaml
@@ -29,6 +29,9 @@ namespace Homework_12.View
                     (Account)clients.First(x => x == (Client)ComboBoxCl2.SelectedItem).Accounts.First(x => x.Number.ToString() == ComboBoxAcc2.Text),
                     decimal.Parse(TextBoxSum.Text)
                     );
+
+                MessageBox.Show($"{decimal.Parse(TextBoxSum.Text)} was transfered!");
+                HistoryLog.SaveLogFile($"From account: {ComboBoxAcc1.SelectedValue.ToString()} to account: {ComboBoxAcc2.SelectedValue.ToString()} was transferred {decimal.Parse(TextBoxSum.Text)} YEN.");
             }
             else
             {

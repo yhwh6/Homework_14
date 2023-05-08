@@ -2,8 +2,9 @@
 using System.Windows;
 using System;
 using System.Windows.Controls;
+using Homework_13.Model;
 
-namespace Homework_12
+namespace Homework_13
 {
     /// <summary>
     /// Interaction logic for pAddClient.xaml
@@ -70,6 +71,9 @@ namespace Homework_12
             {
                 MainWindow.clients.Add(FullName, TaxId, PhoneNumber);
                 MainWindow.CurrentClientTaxId = TaxId;
+
+                MessageBox.Show($"Client {FullName} has been created.");
+                HistoryLog.SaveLogFile($"Client {MainWindow.CurrentClientTaxId}: {FullName} has been created.");
             }
         }
     }

@@ -1,5 +1,5 @@
-﻿using Homework_12.Interface;
-using Homework_12.Model;
+﻿using Homework_13.Interface;
+using Homework_13.Model;
 using System;
 using System.Linq;
 using System.Windows;
@@ -7,7 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 
 
-namespace Homework_12
+namespace Homework_13
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -19,12 +19,15 @@ namespace Homework_12
         public static string? CurrentClientTaxId;
         public static object? CurrentAccountNumber;
 
+        public static DisplayMessage displayMessage = new DisplayMessage() { Text = "Saving", Visible = "Visible" };
+
         public MainWindow()
         {
             if (clients == null)
             {
                 clients = new ClientList();
                 clients.Get();
+                clients.Notify += HistoryLog.SaveLogFile;
             }
             if (clients.Count > 0)
             {
@@ -48,6 +51,9 @@ namespace Homework_12
                 Client client = dgClients.SelectedItems[0] as Client;
                 clients.Remove(client.TaxId);
                 clients.SaveChanges();
+
+                MessageBox.Show($"Client {client.FullName} has been deleted.");
+                HistoryLog.SaveLogFile($"Client {client.TaxId}: {client.FullName} has been deleted.");
             }
             else
             {
@@ -57,9 +63,12 @@ namespace Homework_12
 
         private void dgClients_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
+            Client client = dgClients.SelectedItems[0] as Client;
             CurrentClientTaxId = ((Client)e.Row.DataContext).TaxId;
             clients.Update(ref clients, (Client)e.Row.DataContext, e.Column.SortMemberPath, (e.EditingElement as TextBox).Text);
             clients.SaveChanges();
+
+            HistoryLog.SaveLogFile($"Client {CurrentClientTaxId} has been updated on {(e.EditingElement as TextBox).Text}.");
         }
 
         private void dgClients_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -97,6 +106,9 @@ namespace Homework_12
             {
                 client.Accounts.Remove(dgAccounts.SelectedItems[0] as IAccount<Account>);
                 clients.SaveChanges();
+
+                MessageBox.Show($"Account has been deleted from client {client.FullName}.");
+                HistoryLog.SaveLogFile($"Account has been deleted from client {client.TaxId}: {client.FullName}.");
             }
             else
             {
@@ -120,6 +132,11 @@ namespace Homework_12
         private void MenuTransfer(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("pTransfer.xaml", UriKind.Relative));
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

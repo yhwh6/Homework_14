@@ -1,9 +1,10 @@
-﻿using System.Linq;
+﻿using Homework_13.Model;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
 
-namespace Homework_12
+namespace Homework_13
 {
     /// <summary>
     /// Логика взаимодействия для pTransferFunds.xaml
@@ -23,6 +24,10 @@ namespace Homework_12
                 MainWindow.clients.First(x => x.TaxId == MainWindow.CurrentClientTaxId).Accounts
                     .First(x => x.Number == MainWindow.CurrentAccountNumber)
                     .TransferFunds(decimal.Parse(TextBoxSum.Text));
+
+                MessageBox.Show($"Сlient's account {MainWindow.CurrentAccountNumber} has been funded with {sum} YEN.");
+                HistoryLog.SaveLogFile($"Сlient's account {MainWindow.CurrentAccountNumber} has been funded with {sum} YEN.");
+
             }
             else
             {
