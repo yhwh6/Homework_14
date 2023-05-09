@@ -27,19 +27,31 @@ namespace Homework_13.Model
         /// </summary>
         public void Get()
         {
-            var load = JsonConvert.DeserializeObject<ObservableCollection<ClientJSON>>(
-                File.ReadAllText("./clients_db.json"));
-
-            if (load.Count > 0)
+            string fileName = "./clients_db.json";
+            if (!File.Exists(fileName))
             {
-                foreach (var item in load)
+                using (File.Create(fileName)) { }
+            }
+
+            fileName = File.ReadAllText("./clients_db.json");
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                var load = JsonConvert.DeserializeObject<ObservableCollection<ClientJSON>>(fileName);
+                if (load != null && load.Count > 0)
                 {
-                    this.Add(new Client(item.FullName, item.TaxId, item.PhoneNumber, item.Accounts));
+                    foreach (var item in load)
+                    {
+                        this.Add(new Client(item.FullName, item.TaxId, item.PhoneNumber, item.Accounts));
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("BD is empty!");
                 }
             }
             else
             {
-                MessageBox.Show("BD is empty");
+                MessageBox.Show("clients_db.json was created.");
             }
         }
 
